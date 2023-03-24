@@ -1,51 +1,52 @@
 import './SearchForm.css';
 import { useContext, useState } from 'react';
+
 import UserContext from '../context/UserContext';
-import queryUser from '../queries/queryUser.js';
 import { URL } from '../App';
 import BasicUserInfo from './BasicUserInfo';
-import Level from '../httpRequests/Level';
+import queryBasicUserData from '../queries/queryBasicUserData';
 
 function SearchForm() {
   const [input, setInput] = useState('');
   const { login, setLogin, id, setID, level, setLevel } =
     useContext(UserContext);
-  console.log('usercontext id:', id);
   const [feedback, setFeedback] = useState('');
-  const requestUserIdLogin = queryUser(input);
+
+  const requestUserIdLoginLevel = queryBasicUserData(input.toString());
+
+  const processBasicUserData = (data) => {
+    if (data) {
+      setLogin(input);
+      setID(data.data.transaction[0].userId);
+      setLevel(data.data.transaction[0].amount);
+      setFeedback('');
+    } else {
+      setFeedback('Username not found... Try another one?');
+    }
+  };
 
   const getUserIdLogin = (e) => {
     e.preventDefault();
-
     fetch(URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        query: requestUserIdLogin,
+        query: requestUserIdLoginLevel,
       }),
     }).then((res) => {
       res
         .json()
-        .then((data) => {
-          if (data.data.user[0]) {
-            setLogin(data.data.user[0].login);
-            setID(data.data.user[0].id);
-            setFeedback('');
-          } else {
-            setLogin('');
-            setID('');
-            setFeedback('Username not found... Try another one?');
-          }
+        .then((data) => processBasicUserData(data))
+        .catch(() => {
+          console.log('User credentials invalid');
+          setID('');
+          setLevel('');
+          setLogin('');
         })
-        .catch(() => console.log('User credentials invalid'))
         .finally(() => {
           setInput('');
         });
     });
-
-    /*     requestUserLevel
-      ? console.log('have level beginning')
-      : console.log('not yet'); */
   };
 
   function handleInputChange(e) {
@@ -78,7 +79,7 @@ function SearchForm() {
       </div>
       <div>
         <div>{feedback}</div>
-        {login && <BasicUserInfo login={login} id={id} />}
+        {login && <BasicUserInfo login={login} id={id} level={level} />}
       </div>
     </div>
   );

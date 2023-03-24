@@ -1,9 +1,9 @@
 import { createContext } from 'react';
 
 const UserContext = createContext({
-  login: 'hey',
+  login: '',
   setLogin: () => {},
-  id: '0',
+  id: '',
   setID: () => {},
   level: '',
   setLevel: () => {},
