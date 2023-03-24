@@ -1,0 +1,16 @@
+.inputfield,
+.searchButton {
+  border-radius: 6px;
+  margin: 20px 10px;
+}
+
+.inputfield {
+  padding: 8px;
+  font-size: larger;
+}
+
+.searchButton {
+  padding: 10px;
+  font-size: medium;
+  background-color: palegreen;
+}
