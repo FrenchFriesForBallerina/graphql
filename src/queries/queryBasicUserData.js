@@ -1,9 +1,9 @@
-function queryBasicUserData(username) {
+function queryBasicUserData(login) {
   return `
   {
     transaction(
       where: {
-        user: { login: { _eq: ${username} } }
+        user: { login: { _eq: ${login} } }
         type: { _eq: "level" }
       }
       limit: 1
