@@ -8,11 +8,11 @@ import getData from '../utils/getData';
 
 function SearchForm() {
   const [input, setInput] = useState('');
-  const { login, setLogin, id, setID, level, setLevel } =
+  const { login, setLogin, id, setID, level, setLevel, xp, setXP } =
     useContext(UserContext);
   const [feedback, setFeedback] = useState('');
 
-  const requestUserIdLoginLevel = queryBasicUserData(input.toString());
+  const requestUserIdLoginLevel = queryBasicUserData(input);
 
   const processBasicUserData = (data) => {
     if (data) {
@@ -20,8 +20,6 @@ function SearchForm() {
       setID(data.data.transaction[0].userId);
       setLevel(data.data.transaction[0].amount);
       setFeedback('');
-    } else {
-      setFeedback('Username not found... Try another one?');
     }
   };
 
@@ -34,6 +32,8 @@ function SearchForm() {
         setID('');
         setLevel('');
         setLogin('');
+        //setXP([]);
+        setFeedback('Username not found... Try another one?');
       })
       .finally(() => {
         setInput('');
@@ -56,9 +56,6 @@ function SearchForm() {
               value={input}
               placeholder="Type in a username"
               onChange={(e) => {
-                if (login) {
-                  setLogin('');
-                }
                 handleInputChange(e);
               }}
             />

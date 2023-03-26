@@ -7,8 +7,8 @@ const UserContext = createContext({
   setID: () => {},
   level: '',
   setLevel: () => {},
-  /*xp: '',
-  setXP: () => {}, */
+  xp: 0,
+  setXP: () => {},
 });
 
 export default UserContext;
