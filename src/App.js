@@ -4,7 +4,7 @@ import { useState } from 'react';
 import UserContext from './context/UserContext';
 
 import SearchForm from './components/SearchForm';
-import XP from './components/XP';
+import Result from './components/Result';
 
 export const URL = 'https://01.kood.tech/api/graphql-engine/v1/graphql';
 
@@ -20,7 +20,7 @@ const App = () => {
     >
       <div>
         <SearchForm />
-        <XP />
+        {id && <Result />}
       </div>
     </UserContext.Provider>
   );

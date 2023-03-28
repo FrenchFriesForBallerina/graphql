@@ -32,7 +32,6 @@ function SearchForm() {
         setID('');
         setLevel('');
         setLogin('');
-        //setXP([]);
         setFeedback('Username not found... Try another one?');
       })
       .finally(() => {
