@@ -1,17 +1,9 @@
 function queryXP(id, offset) {
   return `
   {
-    transaction (
-      where: {path: {_regex: "/johvi/div-01"}, type: {_eq: "up"}, object: {type: {_regex: "project"}}, userId: {_eq: ${id}}}
-      order_by: {createdAt: desc}
-      offset: ${offset}
-    )  {
-      createdAt
-      amount
-      object {
-        name
-        type
-      }
+    progress(where: {userId: {_eq: ${id}}, isDone: {_eq: true} , path: {_regex: "/johvi/div-01", _niregex: "/piscine-js|/piscine-js-2|/rust"}}
+    offset: ${offset}) {
+      path
     }
   }
   `;
